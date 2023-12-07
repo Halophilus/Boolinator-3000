@@ -144,16 +144,15 @@ def evaluate_response(is_correct):
         else:
             points = 1
         if is_correct:
-            if points != None:
+            if score != None:
                 score += points
-                lcd_screen.lcd_display_string("You got it!", 2)
         else:
-            if points != None:
+            if score != None:
                 score -= points
-                lcd_screen.lcd_display_string("Nope!", 2)
         game_active = False
     except Exception as ex:
         print(f"Error in evaluate_response: {ex}")
+
 
 def start_game():
     '''
@@ -176,14 +175,27 @@ def start_game():
         
         start_time = time.time() # Current time in seconds
         game_active = True # Global flag that marks the beginning and end of a round
-
+        initial_score = score
         while game_active and time.time() - start_time < 30:
             time_left = 30 - (time.time() - start_time)
             lcd_screen.lcd_display_string(update_progress_bar(time_left), 2)
             time.sleep(0.1)
+        if time.time() - start_time >= 30: # Lose points if the round ends without an answer
+            score -= 1
 
-        if time.time() - start_time >= 30:
-            score -= 1  # Lose points if the round ends without an answer
+        if initial_score < score:
+            lcd_screen.backlight(0)
+            time.sleep(0.5)
+            lcd_screen.backlight(1)
+            lcd_screen.lcd_display_string(f"CORRECT: {score}")
+        else:
+            lcd_screen.backlight(0)
+            time.sleep(0.5)
+            lcd_screen.backlight(1)
+            lcd_screen.lcd_display_string(f"WRONG: {score}")
+        
+        time.sleep(2)
+        lcd_screen.lcd_clear()
 
     # Game over logic
     lcd_screen.lcd_clear()
@@ -229,5 +241,6 @@ while True:
         correct_answer = None
         update_bool_leds()
         update_score_leds()
+        lcd_screen.lcd_clear()
         lcd_screen.lcd_display_string("PRESS TO PLAY", 1)
         time.sleep(1)  # Prevent immediate restart
