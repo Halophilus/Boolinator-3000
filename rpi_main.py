@@ -65,7 +65,7 @@ def update_progress_bar(time_left, total_time=30):
         progress_length = 16
         filled_length = int(progress_length * time_left // total_time)
         black_box = chr(255)
-        return black_box * filled_length
+        return black_box * filled_length + ("-" * (progress_length - filled_length))
     except Exception as ex:
         print(f"Error in update_progress_bar: {ex}")
 
@@ -161,6 +161,8 @@ def start_game():
     while rounds < 10 and score < 32 and score >= 0:
         rounds += 1
         string_to_display, correct_answer = get_new_string()
+        
+        lcd_screen.lcd_clear()
         lcd_screen.lcd_display_string(string_to_display, 1)
         
         update_bool_leds() # Update score/TF display
@@ -180,7 +182,9 @@ def start_game():
     # Game over logic
     lcd_screen.lcd_clear()
     lcd_screen.lcd_display_string("Game Over", 1)
+    time.sleep(2)
     lcd_screen.lcd_display_string(f"Score: {score}", 2)
+    time.sleep(5)
 
 def true_pressed():
     global correct_answer
