@@ -174,6 +174,7 @@ def start_game():
         
         update_bool_leds() # Update score/TF display
         update_score_leds()
+        time.sleep(1)
         
         start_time = time.time() # Current time in seconds
         game_active = True # Global flag that marks the beginning and end of a round
