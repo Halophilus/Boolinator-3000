@@ -77,9 +77,14 @@ def update_bool_leds():
     try:
         [led.off() for led in bool_leds] # Turns off all bool LEDs
         if X != None: # If the program is in a game state
+            print("X is True") if X else print("X is False") # Turn true/false LEDs on accordingly
+            print("Y is True") if Y else print("Y is False") # Turn true/false LEDs on accordingly
+            print("Z is True") if Z else print("Z is False") # Turn true/false LEDs on accordingly
+            '''
             x_true.on() if X else x_false.on() # Turn true/false LEDs on accordingly
             y_true.on() if Y else y_false.on()
             z_true.on() if Z else z_false.on()
+            '''
     except Exception as ex:
         print(f"Error in update_bool_leds: {ex}")
 
@@ -111,7 +116,8 @@ def update_score_leds():
         if score != None:
             led_states = get_led_states_from_score()
             for led, digit in zip(reversed(score_leds), led_states): # list has to be reversed because the states read left to right
-                led.on() if digit else led.off()
+                print(str(led) + " on") if digit else print(str(led) + " off")
+                # led.on() if digit else led.off()
     except Exception as ex:
         print(f"Error in update_score_leads: {ex}")
 
