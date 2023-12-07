@@ -10,6 +10,9 @@ lcd_screen.lcd_clear()
 true_button = Button(20)
 false_button = Button(21)
 
+last_pressed_time = 0
+debounce_time = 1
+
 # Boolean indicator lights
 x_true = LED(14)
 y_true = LED(15)
@@ -141,9 +144,13 @@ def evaluate_response(is_correct):
         else:
             points = 1
         if is_correct:
-            score += points
+            if points != None:
+                score += points
+                lcd_screen.lcd_display_string("You got it!", 2)
         else:
-            score -= points
+            if points != None:
+                score -= points
+                lcd_screen.lcd_display_string("Nope!", 2)
         game_active = False
     except Exception as ex:
         print(f"Error in evaluate_response: {ex}")
@@ -186,18 +193,26 @@ def start_game():
     time.sleep(5)
 
 def true_pressed():
-    global correct_answer
-    if correct_answer:  # correct_answer is True for an expression
-        evaluate_response(True)
-    else:
-        evaluate_response(False)
+    global correct_answer, last_pressed_time
+    current_time = time.time()
+
+    if current_time - last_pressed_time > debounce_time:
+        last_pressed_time = current_time
+        if correct_answer:  # correct_answer is True for an expression
+            evaluate_response(True)
+        else:
+            evaluate_response(False)
 
 def false_pressed():
-    global correct_answer
-    if not correct_answer: # correct_answer is False for an expression
-        evaluate_response(True)
-    else:
-        evaluate_response(False)
+    global correct_answer, last_pressed_time
+    current_time = time.time()
+
+    if current_time - last_pressed_time > debounce_time:
+        last_pressed_time = current_time
+        if not correct_answer:  # correct_answer is False for an expression
+            evaluate_response(True)
+        else:
+            evaluate_response(False)
 
 # Setup button handlers
 true_button.when_pressed = true_pressed
