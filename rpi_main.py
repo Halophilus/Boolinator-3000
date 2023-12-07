@@ -121,11 +121,6 @@ def update_score_leds():
     except Exception as ex:
         print(f"Error in update_score_leads: {ex}")
 
-def flash_screen():
-    lcd_screen.backlight(0)
-    time.sleep(0.2)
-    lcd_screen.backlight(1)
-
 def evaluate_response(is_correct):
     '''
         Function: changes global score depending on the correctness and timeliness of an answer
@@ -148,10 +143,8 @@ def evaluate_response(is_correct):
             points = 1
         if is_correct:
             score += points
-            flash_screen()
         else:
             score -= points
-            flash_screen()
         game_active = False
     except Exception as ex:
         print(f"Error in evaluate_response: {ex}")
@@ -174,7 +167,6 @@ def start_game():
         
         update_bool_leds() # Update score/TF display
         update_score_leds()
-        time.sleep(1)
         
         start_time = time.time() # Current time in seconds
         game_active = True # Global flag that marks the beginning and end of a round
@@ -225,4 +217,3 @@ while True:
         update_score_leds()
         lcd_screen.lcd_display_string("PRESS TO PLAY", 1)
         time.sleep(1)  # Prevent immediate restart
-
