@@ -122,12 +122,8 @@ def update_score_leds():
         print(f"Error in update_score_leads: {ex}")
 
 def flash_screen():
-    '''
-        Flashes LCD backlight on and off as an indicator of right score
-    '''
-    lcd_screen.lcd_clear()
     lcd_screen.backlight(0)
-    time.sleep(0.5)
+    time.sleep(0.2)
     lcd_screen.backlight(1)
 
 def evaluate_response(is_correct):
@@ -155,7 +151,6 @@ def evaluate_response(is_correct):
             flash_screen()
         else:
             score -= points
-            flash_screen()
             flash_screen()
         game_active = False
     except Exception as ex:
