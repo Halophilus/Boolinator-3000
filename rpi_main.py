@@ -157,7 +157,7 @@ def start_game():
         string_to_display, correct_answer = get_new_string()
         lcd_screen.lcd_display_string(string_to_display, 1)
         
-        update_bool_leds() # Update score display
+        update_bool_leds() # Update score/TF display
         update_score_leds()
         
         start_time = time.time() # Current time in seconds

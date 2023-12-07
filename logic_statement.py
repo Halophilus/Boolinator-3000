@@ -1,4 +1,4 @@
-import random
+import random, re
 
 def random_logical_expression():
     '''
@@ -39,8 +39,16 @@ def evaluate_logical_expression(expr, X, Y, Z):
         Returns:
             Tries to evaluate logical expression, returns overall truth value if successful, otherwise returns None
     '''
-    expr = expr.replace('&', ' and ').replace('|', ' or ').replace('!', 'not ').replace('^', ' != ')
-
+    expr = expr.replace('&', ' and ').replace('|', ' or ').replace('!', ' not ').replace('^', ' != ')
+    print(expr)
+    # Enclose 'not' operations in parentheses, handling repeated 'not's
+    # Match 'not' followed by either a variable, another 'not', or a '('
+    expr = re.sub(r'(\bnot\b\s+)(?=\b[XZY]\b|\bnot\b|\()', r'(not ', expr)
+    print(expr)
+    # Add closing parentheses for all opened 'not' parentheses
+    open_parens = expr.count('(not')
+    expr += ')' * open_parens
+    print(expr)
     try:
         return eval(expr, {"__builtins__": None}, {"X": X, "Y": Y, "Z": Z})
     except Exception as ex:
