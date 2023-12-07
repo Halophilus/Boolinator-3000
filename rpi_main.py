@@ -5,6 +5,8 @@ from logic_statement import random_logical_expression, evaluate_logical_expressi
 
 # User interface
 lcd_screen = lcd()
+lcd_screen.lcd_clear()
+
 true_button = Button(20)
 false_button = Button(21)
 
@@ -95,14 +97,11 @@ def get_led_states_from_score():
     '''
     global score
     try:
-        state_list = []
-        bin_score = bin(score)[2:] # Slice clips off leading base
-        for digit in bin_score: # For every binary digit in the score
-            if digit == "1":
-                state_list.append(True) # Light goes on to indicate a 1
-            else:
-                state_list.append(False) # Light goes off to indicate a 0
+        bin_score = f'{score:05b}' if score >= 0 else '00000'
+        # Convert each binary digit to True (for '1') or False (for '0')
+        state_list = [digit == '1' for digit in bin_score]
         return state_list
+
     except Exception as ex:
         print(f"Error in get_led_states_from_score: {ex}")
 
@@ -158,7 +157,7 @@ def start_game():
     rounds = 0
     game_active = True
 
-    while rounds < 10 and score < 32 and score >= 0:
+    while rounds < 10:
         rounds += 1
         string_to_display, correct_answer = get_new_string()
         
