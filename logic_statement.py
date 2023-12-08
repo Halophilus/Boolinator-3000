@@ -49,7 +49,7 @@ def evaluate_logical_expression(expr, X, Y, Z):
     # Add closing parentheses for all opened 'not' parentheses
     open_parens = expr.count('(not')
     expr += ')' * open_parens
-    print(expr)
+    print(f"EVALUATED STATEMENT: {expr}")
     
     try:
         return eval(expr, {"__builtins__": None}, {"X": X, "Y": Y, "Z": Z})
