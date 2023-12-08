@@ -57,7 +57,7 @@ for light in LED_objects:
 test_backlight()
 test_clear_display()
 test_display_string()
-'''
+
 for button in button_objects:
     button.when_pressed = button_press(button.pin.number)
 
@@ -74,3 +74,4 @@ for button in button_objects:
         button.wait_for_press()
         light.off()
         sleep(1)
+'''
