@@ -12,7 +12,7 @@ true_button = Button(20)
 false_button = Button(21)
 
 last_pressed_time = 0
-debounce_time = 2.7
+debounce_time = 2.75
 
 # Boolean indicator lights
 x_true = LED(14)
@@ -154,21 +154,30 @@ def evaluate_response(is_correct):
             away depending on whether the answer is correct or now. Once the answer has been evaluated, it
             resets the round state to prevent multiple presses from affecting the points awarded.
     '''
-    global score, game_active, correct_answer
+    global score, game_active, correct_answer, start_time
+    print(f"Trying to evaluate button answer at time {time.time()}")
+    print(f"Correct answer: {correct_answer}")
+    print(f"Is correct: {is_correct}")
     try:
         if correct_answer != None:
+            print("Pressed during an active game")
+            print(f"Starting time: {start_time}")
             elapsed_time = time.time() - start_time
+            print(f"Time elapsed: {elapsed_time}")
             if elapsed_time <= 10:
                 points = 3
             elif elapsed_time <= 20:
                 points = 2
             else:
                 points = 1
+            print(f"Points awarded: {points}")
             if is_correct:
                 score += points
             else:
                 score -= points
+            print(f"Current score: {score}")
             game_active = False
+            correct_answer = None
     except Exception as ex:
         print(f"Error in evaluate_response: {ex}")
 
@@ -182,7 +191,7 @@ def start_game():
     rounds = 0
     game_active = True
     lcd_screen.lcd_clear()
-    lcd_screen.lcd_display_string("GET READY")
+    lcd_screen.lcd_display_string("GET READY", 1)
     time.sleep(2.6)
     while rounds < 10:
         rounds += 1
@@ -217,7 +226,7 @@ def start_game():
             lcd_screen.backlight(1)
             lcd_screen.lcd_display_string("CORRECT", 1)
             time.sleep(1)
-            lcd_screen.lcd_display_string(f"Score: {score}")
+            lcd_screen.lcd_display_string(f"Score: {score}", 2)
             time.sleep(1.5)
         else:
             print("POINT LOST")
@@ -253,6 +262,7 @@ def true_pressed():
     current_time = time.time()
     print("TRUE BUTTON PRESSED")
     if current_time - last_pressed_time > debounce_time:
+        print("DEBOUNCE RESET FOR TB")
         last_pressed_time = current_time
         if correct_answer:  # correct_answer is True for an expression
             evaluate_response(True)
@@ -272,6 +282,7 @@ def false_pressed():
     current_time = time.time()
     print("FALSE BUTTON PRESSED")
     if current_time - last_pressed_time > debounce_time:
+        print("DEBOUNCE RESET FOR FB")
         last_pressed_time = current_time
         if not correct_answer:  # correct_answer is False for an expression
             evaluate_response(True)
