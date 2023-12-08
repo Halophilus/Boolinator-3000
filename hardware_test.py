@@ -1,17 +1,17 @@
 from gpiozero import Button, LED
 from time import sleep
 from I2C_LCD_driver import lcd
-'''
+
 LED_pins = [14, 15, 18, 23, 24, 25]
-adder_pins = [9, 11, 0, 5, 6, 13, 19, 25]
+adder_pins = [26, 19, 13, 6, 5]
 button_pins = [20, 21]
 
 LED_objects = [LED(pin) for pin in LED_pins]
 adder_objects = [LED(pin) for pin in adder_pins]
 button_objects = [Button(pin) for pin in button_pins]
-'''
-screen = lcd()
 
+# screen = lcd()
+'''
 def test_display_string():
     print("Testing: Display String")
     screen.lcd_display_string("Testing Line 1", 1)  # Display on line 1
@@ -38,10 +38,10 @@ def test_backlight():
     print("Backlight Off")
     screen.backlight(0)
     sleep(5)  # Wait 5 seconds to visually check the backlight
-
 '''
+
 def button_press():
-    print("Button pressed at pin!")
+    print("Button pressed")
 
 for signal in adder_objects:
     signal.on()
@@ -52,8 +52,8 @@ for light in LED_objects:
     signal.on()
     sleep(1)
     light.off()
-'''
 
+'''
 test_backlight()
 test_clear_display()
 test_display_string()
@@ -74,4 +74,3 @@ for button in button_objects:
         button.wait_for_press()
         light.off()
         sleep(1)
-'''
