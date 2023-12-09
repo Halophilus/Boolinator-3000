@@ -2,7 +2,7 @@ from gpiozero import Button, LED
 from time import sleep
 from I2C_LCD_driver import lcd
 
-LED_pins = [14, 15, 18, 23, 24, 25]
+LED_pins = [17, 27, 22]
 adder_pins = [26, 19, 13, 6, 5]
 button_pins = [20, 21]
 
@@ -43,15 +43,16 @@ def test_backlight():
 def button_press():
     print("Button pressed")
 
-for signal in adder_objects:
-    signal.on()
-    sleep(1)
-    signal.off()
-
-for light in LED_objects:
-    signal.on()
-    sleep(1)
-    light.off()
+try:
+    while True:
+        print("Trying to turn on Blue LEDs")
+        for light in LED_objects:
+            light.on()
+            sleep(1)
+            light.off()
+except KeyboardInterrupt:
+    print("Closing")
+    [led.close() for led in LED_objects]
 
 '''
 test_backlight()
