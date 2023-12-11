@@ -54,7 +54,6 @@ try:
         for light in LED_objects:
             light.on()
             sleep(1)
-            light.off()
         test_backlight()
         test_clear_display()
         test_display_string()
