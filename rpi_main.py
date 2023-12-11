@@ -120,6 +120,7 @@ def get_led_states_from_score():
     print(f"Trying to get LED states from score {score}")
     try:
         bin_score = f'{score:05b}' if score >= 0 else '00000'
+        print(f'SCORE IN BINARY: {bin_score}')
         # Convert each binary digit to True (for '1') or False (for '0')
         state_list = [digit == '1' for digit in bin_score]
         print(f"Score LED state list {state_list} from score {bin_score}")
