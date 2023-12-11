@@ -255,6 +255,7 @@ def start_game():
     # Game over logic
     lcd_screen.lcd_clear()
     print("ROUNDS OVER")
+    update_score_leds()
     lcd_screen.lcd_display_string("Game Over", 1)
     time.sleep(2)
     lcd_screen.lcd_display_string(f"Score: {score}", 2)
