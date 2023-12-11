@@ -138,7 +138,7 @@ def update_score_leds():
     try:
         [led.off() for led in score_leds]
         led_states = get_led_states_from_score()
-        for led, digit in zip(reversed(score_leds), led_states): # list has to be reversed because the states read left to right
+        for led, digit in zip((score_leds), led_states):
             print(str(led) + " on") if digit else print(str(led) + " off")
             led.on() if digit else led.off()
     except Exception as ex:
