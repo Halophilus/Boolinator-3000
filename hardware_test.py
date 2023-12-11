@@ -3,7 +3,7 @@ from time import sleep
 from I2C_LCD_driver import lcd
 
 LED_pins = [17, 27, 22, 23, 24, 25, 26, 19, 13, 6, 5]
-adder_pins = [26, 19, 13, 6, 5]
+
 button_pins = [20, 21]
 
 LED_objects = [LED(pin) for pin in LED_pins]
