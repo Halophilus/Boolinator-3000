@@ -3,12 +3,23 @@ from time import sleep
 from I2C_LCD_driver import lcd
 
 LED_pins = [17, 27, 22, 23, 24, 25, 26, 19, 13, 6, 5]
-button_pins = [20, 21]
 LED_objects = [LED(pin) for pin in LED_pins]
 button_objects = [Button(pin) for pin in button_pins]
 
-# screen = lcd()
-'''
+true_button = Button(20)
+false_button = Button(21)
+
+def true_button_press():
+    print("True!")
+
+def false_button_press():
+    print("False!")
+
+true_button.when_pressed = true_button_press
+false_button.when_pressed = false_button_press
+
+screen = lcd()
+
 def test_display_string():
     print("Testing: Display String")
     screen.lcd_display_string("Testing Line 1", 1)  # Display on line 1
@@ -35,10 +46,8 @@ def test_backlight():
     print("Backlight Off")
     screen.backlight(0)
     sleep(5)  # Wait 5 seconds to visually check the backlight
-'''
 
-def button_press():
-    print("Button pressed")
+
 
 try:
     while True:
@@ -47,6 +56,9 @@ try:
             light.on()
             sleep(1)
             light.off()
+        test_backlight()
+        test_clear_display()
+        test_display_string()
 except KeyboardInterrupt:
     print("Closing")
     [led.close() for led in LED_objects]
