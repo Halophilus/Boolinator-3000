@@ -103,10 +103,18 @@ def update_bool_leds():
             print("X is True") if X else print("X is False") # Diagnostic print statement
             print("Y is True") if Y else print("Y is False")
             print("Z is True") if Z else print("Z is False")
-            
-            x_true.on() if X else x_false.on() # Turn true/false LEDs on accordingly
-            y_true.on() if Y else y_false.on()
-            z_true.on() if Z else z_false.on()
+            if X:
+                x_true.on()
+            else:
+                x_false.on()
+            if Y:
+                y_true.on()
+            else:
+                y_false.on()
+            if Z:
+                z_true.on()
+            else:
+                z_false.on()
             
     except Exception as ex:
         print(f"Error in update_bool_leds: {ex}")
