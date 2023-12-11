@@ -15,9 +15,9 @@ last_pressed_time = 0
 debounce_time = 2.75
 
 # Boolean indicator lights
-x_true = LED(14)
-y_true = LED(15)
-z_true = LED(18)
+x_true = LED(17)
+y_true = LED(27)
+z_true = LED(22)
 
 x_false = LED(23)
 y_false = LED(24)
