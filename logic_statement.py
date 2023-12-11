@@ -40,7 +40,7 @@ def evaluate_logical_expression(expr, X, Y, Z):
             Tries to evaluate logical expression, returns overall truth value if successful, otherwise returns None
     '''
     # Convert human readable logical operators into ones that can be parsed by Python
-    expr = expr.replace('&', ' and ').replace('|', ' or ').replace('!', ' not ').replace('^', ' != ')
+    expr = expr.replace('&', ' and ').replace('|', ' or ').replace('!', ' not ').replace('^', ' ^ ')
     # print(expr)
     # Enclose 'not' operations in parentheses, handling repeated 'not's
     # Match 'not' followed by either a variable, another 'not', or a '('
