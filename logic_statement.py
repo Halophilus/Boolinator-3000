@@ -41,11 +41,11 @@ def evaluate_logical_expression(expr, X, Y, Z):
     '''
     # Convert human readable logical operators into ones that can be parsed by Python
     expr = expr.replace('&', ' and ').replace('|', ' or ').replace('!', ' not ').replace('^', ' ^ ')
-    # print(expr)
+    print(expr)
     # Enclose 'not' operations in parentheses, handling repeated 'not's
     # Match 'not' followed by either a variable, another 'not', or a '('
     expr = re.sub(r'(\bnot\b\s+)(?=\b[XZY]\b|\bnot\b|\()', r'(not ', expr)
-    # print(expr)
+    print(expr)
     # Add closing parentheses for all opened 'not' parentheses
     open_parens = expr.count('(not')
     expr += ')' * open_parens
